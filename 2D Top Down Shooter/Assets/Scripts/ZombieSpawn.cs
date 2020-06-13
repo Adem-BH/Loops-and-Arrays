@@ -8,6 +8,7 @@ public class ZombieSpawn : MonoBehaviour
 
     public GameObject Zombie;
     public  int ZombieNumber = 5;
+    public int Waves;
     public Transform Player;
 
     Vector3 RandomCircle (Vector3 center, float radius)
@@ -60,9 +61,12 @@ public class ZombieSpawn : MonoBehaviour
     void Spawn()
     {
 
-        Vector2 Position = RandomCircle(Vector3.zero, Player.position.x + 6);
-        Instantiate(Zombie, Position + Vector2.one, Quaternion.identity);
-        ZombieNumber--;
+        for (int i = 0; i < Waves; i++) {
+
+            Vector2 Position = RandomCircle(Vector3.zero, Player.position.x + 6);
+            Instantiate(Zombie, Position + Vector2.one, Quaternion.identity);
+            ZombieNumber--;
+        }
 
     }
 }
