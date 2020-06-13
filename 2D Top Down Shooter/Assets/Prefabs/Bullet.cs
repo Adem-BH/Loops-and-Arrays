@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float BulletSpeed;
+    public float Damage = 30;
     public GameObject ZombieSpawner;
 
     private Rigidbody2D rb;
@@ -21,21 +22,7 @@ public class Bullet : MonoBehaviour
       
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    
-        
-        {
-        if (collision.gameObject.tag == "Zombie")
-        {
-            Destroy(gameObject);
-            Destroy(collision.gameObject);
-            ZombieSpawner.GetComponent<ZombieSpawn>().ZombieNumber++;
-         
-
-           
-
-        }
-    }
+   
 
     
 

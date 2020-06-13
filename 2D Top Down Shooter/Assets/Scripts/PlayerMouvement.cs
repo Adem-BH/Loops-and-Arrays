@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerMouvement : MonoBehaviour
 {
@@ -16,6 +18,12 @@ public class PlayerMouvement : MonoBehaviour
 
     public Behaviour[] DisableOnDeath;
     GameObject[] Zombies;
+
+    public Image HealthBar;
+
+    public float  Health = 100;
+
+   
 
 
     private Rigidbody2D rb;
@@ -35,18 +43,25 @@ public class PlayerMouvement : MonoBehaviour
   
     void Update()
     {
-        
+
+
         Shoot();
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Zombie")
         {
+            Health -= collision.gameObject.GetComponent<Zombie>().Damage;
 
-            Die();
+            HealthBar.fillAmount = Health / 100f;
 
+            
+            if (Health <= 0){
+                Health = 0;
+                Die();
+            }
         }
     }
 
@@ -106,8 +121,10 @@ public class PlayerMouvement : MonoBehaviour
 
     public void Die()
     {
+        GetComponent<Text>().TimeStart = false;
+        SceneManager.LoadScene(1);
         foreach (Behaviour i in DisableOnDeath)
-            i.enabled = false;
+        i.enabled = false;
 
     }
 
